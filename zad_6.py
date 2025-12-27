@@ -1,15 +1,15 @@
-def list_operations(list1:list, list2:list)->list:
+def list_operations(list1: list, list2: list) -> list:
 
-    unique_elements = set(list1  + list2)
-
+    unique_elements = set(list1 + list2)
     return [x**3 for x in unique_elements]
 
-print(list_operations([1,1,4],[1,9,1]))
 
-#Alternative approach with for each:
-def list_operations(list1:list, list2:list)->list:
+print(list_operations([1, 1, 4], [1, 9, 1]))
 
-    unique_elements = set(list1  + list2)
+
+# "Alternative approach with for each:
+def list_operations(list1: list, list2: list) -> List:
+    unique_elements = set(list1 + list2)
     outcome_list = []
 
     for element in unique_elements:
@@ -18,4 +18,5 @@ def list_operations(list1:list, list2:list)->list:
 
     return outcome_list
 
-print(list_operations([1,1,4],[1,9,1]))
+
+print(list_operations([1, 1, 4], [1, 9, 1]))
