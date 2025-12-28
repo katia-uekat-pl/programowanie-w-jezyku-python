@@ -1,3 +1,5 @@
+from zad_1 import Student
+
 class Library:
     def __init__(
             self, city: str, street: str, zip_code: str,
@@ -10,15 +12,15 @@ class Library:
 
     def __str__(self) -> str:
         return (
-            f"{self.city}, {self.street}, {self.zip_code}, "
-            f"{self.open_hours}, {self.phone}"
+            f"city: {self.city}, street: {self.street}, zip: {self.zip_code}, "
+            f"open: {self.open_hours}, phone: {self.phone}"
         )
 
 
-lib1 = Library("Kijow", "Podil", "00-000", "8:888-88:88", "123456789")
-lib2 = Library("Odessa", "Derebasivska", "00-000", "9:99-99:99", "987654321")
+lib1 = Library("Kijow", "Podil", "00-000", "07-15", "123456789")
+lib2 = Library("Odessa", "Derebasivska", "00-000", "08-16", "987654321")
 
-print(lib1)
+print(f"Library: {lib1}")
 
 
 class Employee:
@@ -37,9 +39,9 @@ class Employee:
 
     def __str__(self) -> str:
         return (
-            f"{self.first_name}, {self.last_name}, {self.hire_date}, "
-            f"{self.birth_date}, {self.city}, {self.street}, "
-            f"{self.zip_code}, {self.phone}"
+            f"first: {self.first_name}, last: {self.last_name}, hire: {self.hire_date}, "
+            f"birth: {self.birth_date}, city: {self.city}, street: {self.street}, "
+            f"zip: {self.zip_code}, phone: {self.phone}"
         )
 
 
@@ -61,7 +63,7 @@ print(e1)
 
 class Book:
     def __init__(
-            self, library: str, publication_date: str, author_name: str,
+            self, library: Library, publication_date: str, author_name: str,
             author_surname: str, number_of_pages: str):
         self.library = library
         self.publication_date = publication_date
@@ -71,8 +73,8 @@ class Book:
 
     def __str__(self) -> str:
         return (
-            f"{self.author_name} {self.author_surname} "
-            f"{self.number_of_pages}{self.library}"
+            f"author name: {self.author_name}, author surname: {self.author_surname}, "
+            f"pages: {self.number_of_pages}, library: `{self.library}`"
         )
 
 
@@ -86,8 +88,8 @@ print(b1)
 
 
 class Order:
-    def __init__(self, employee: str, student: str,
-                 books: str, order_date: str
+    def __init__(self, employee: Employee, student: Student,
+                 books: list[Book], order_date: str
                  ):
         self.employee = employee
         self.student = student
@@ -95,8 +97,19 @@ class Order:
         self.order_date = order_date
 
     def __str__(self) -> str:
-        return f"{self.employee} {self.student} {self.books} {self.order_date}"
+        return (f"employee: `{self.employee}`,\n"
+                f"student: `{self.student}`,\n"
+                f"books: [\n\t{"\n\t".join(map(str, self.books))}\n],\n"
+                f"order date: {self.order_date}")
 
 
-order1 = Order(e1, "student1", b1, "2005-08-20")
-print(order1)
+student_1 = Student("Student1", [70, 60, 80])
+student_2 = Student("Student2", [30, 50, 90])
+student_3 = Student("Student3", [10, 20, 70])
+
+
+order1 = Order(e1, student_1, [b1, b2], "2005-08-20")
+order2 = Order(e2, student_2, [b3, b4, b5], "2005-08-10")
+
+print(f"Order1:\n{order1}\n\n")
+print(f"Order2:\n{order2}\n\n")
