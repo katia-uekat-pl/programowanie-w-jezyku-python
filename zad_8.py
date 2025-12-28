@@ -1,76 +1,92 @@
-from typing import List, Optional
-import requests
 import argparse
+import requests
 
-url_API = "https://api.openbrewerydb.org/v1/breweries"
+URL_API = "https://api.openbrewerydb.org/v1/breweries"
 
 
 class Brewery:
+
     def __init__(
-            self,
-            name: str,
-            brewery_type: str,
-            city: str,
-            country: str,
-            **kwargs
+        self,
+        id: str,
+        name: str,
+        brewery_type: str,
+        address_1: str | None,
+        address_2: str | None,
+        address_3: str | None,
+        city: str,
+        state_province: str,
+        postal_code: str,
+        country: str,
+        longitude: float | None,
+        latitude: float | None,
+        phone: str | None,
+        website_url: str | None,
+        state: str,
+        street: str | None,
     ):
+        self.id = id
         self.name = name
         self.brewery_type = brewery_type
+        self.address_1 = address_1
+        self.address_2 = address_2
+        self.address_3 = address_3
         self.city = city
+        self.state_province = state_province
+        self.postal_code = postal_code
         self.country = country
-        self.id = kwargs.get('id')
+        self.longitude = longitude
+        self.latitude = latitude
+        self.phone = phone
+        self.website_url = website_url
+        self.state = state
+        self.street = street
 
     def __str__(self) -> str:
         return (
-            f"BROWAR: {self.name}\n"
-            f"TYPE:   {self.brewery_type}\n"
-            f"CITY:   {self.city} ({self.country})\n"
-            f"ID:     {self.id}\n"
-            f"{'=' * 30}"
+            f"id: {self.id}, name: {self.name}, type: {self.brewery_type}, " +
+            f"address: {self.address_1} {self.address_2} {self.address_3}, " +
+            f"city: {self.city}, state_province: {self.state_province}, " +
+            f"postal_code: {self.postal_code}, country: {self.country}, " +
+            f"longitude: {self.longitude}, latitude: {self.latitude}, " +
+            f"phone: {self.phone}, website_url: {self.website_url}," +
+            f"state: {self.state}, street: {self.street}"
         )
 
 
-def get_breweries_from_api(city: str | None) -> list:
-
-    params = {"per_page": 20}
-    if city:
-        params["by_city"] = city
-
+def get_breweries_from_api(limit: int, city: str | None) -> list[Brewery]:
+    breweries = []
     try:
-        response = requests.get(url_API, params=params)
+        params = {
+            "page": 1,
+            "per_page": limit,
+        }
+        if city:
+            params["by_city"] = city
+
+        response = requests.get(URL_API, params=params)
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+
+        for item in data:
+            b = Brewery(item["id"], item["name"], item["brewery_type"], item["address_1"], item["address_2"],
+                        item["address_3"], item["city"], item["state_province"], item["postal_code"],
+                        item["country"], item["longitude"], item["latitude"], item["phone"],
+                        item["website_url"], item["state"], item["street"])
+            breweries.append(b)
+
+        return breweries
     except requests.exceptions.RequestException as e:
-        print(f"Błąd pobierania: {e}")
+        print(f"Some error occurred: {e}")
         return []
 
 
-def brewery_factory(breweries_data: list) -> List[Brewery]:
-    brewery_objects = []
-    for item in breweries_data:
-        brewery_objects.append(Brewery(**item))
-    return brewery_objects
-
-
-def get_args():
-    parser = argparse.ArgumentParser(description='Browary API')
-    parser.add_argument('-c', '--city', help='Filtruj po mieście', required=False)
-    return vars(parser.parse_args())
-
-
-def main():
-    args = get_args()
-    # Pobieramy dane
-    raw_data = get_breweries_from_api(city=args.get('city'))
-    # Tworzymy obiekty
-    breweries = brewery_factory(raw_data)
-
-    # Wyświetlamy
-    for b in breweries:
-        print(b)
-
-    print(f"Pobrano: {len(breweries)} obiektów.")
-
-
 if __name__ == "__main__":
-    main()
+
+    parser = argparse.ArgumentParser(description='Breweries API')
+    parser.add_argument('--city', help='Filter by city', required=False)
+    args = parser.parse_args()
+
+    brewery_list = get_breweries_from_api(20, args.city)
+    for brewery in brewery_list:
+        print(brewery)
