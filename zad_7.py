@@ -1,4 +1,3 @@
-from typing import List, Optional
 import requests
 
 URL_API = "https://api.openbrewerydb.org/v1/breweries"
@@ -54,7 +53,7 @@ class Brewery:
         )
 
 
-def get_breweries_from_api(limit: int) -> List[Brewery]:
+def get_breweries_from_api(limit: int) -> list[Brewery]:
     breweries = []
     try:
         response = requests.get(f"{URL_API}?page=1&per_page={limit}")
@@ -70,7 +69,7 @@ def get_breweries_from_api(limit: int) -> List[Brewery]:
 
         return breweries
     except requests.exceptions.RequestException as e:
-        print(f"Some error occured: {e}")
+        print(f"Some error occurred: {e}")
         return []
 
 
