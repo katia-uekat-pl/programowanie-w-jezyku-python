@@ -1,5 +1,6 @@
 from zad_1 import Student
 
+
 class Library:
     def __init__(
             self, city: str, street: str, zip_code: str,
@@ -39,8 +40,10 @@ class Employee:
 
     def __str__(self) -> str:
         return (
-            f"first: {self.first_name}, last: {self.last_name}, hire: {self.hire_date}, "
-            f"birth: {self.birth_date}, city: {self.city}, street: {self.street}, "
+            f"first: {self.first_name}, last: {self.last_name}, "
+            f"hire: {self.hire_date}, "
+            f"birth: {self.birth_date}, city: {self.city}, "
+            f"street: {self.street}, "
             f"zip: {self.zip_code}, phone: {self.phone}"
         )
 
@@ -73,7 +76,8 @@ class Book:
 
     def __str__(self) -> str:
         return (
-            f"author name: {self.author_name}, author surname: {self.author_surname}, "
+            f"author name: {self.author_name}, "
+            f"author surname: {self.author_surname}, "
             f"pages: {self.number_of_pages}, library: `{self.library}`"
         )
 
