@@ -1,20 +1,17 @@
-import unittest
+from logic import is_palindrome
 
-def is_palindrome(text: str) -> bool:
 
-    clean_text = "".join(text.split()).casefold()
+def test_palindrome_1():
+    assert is_palindrome("kajak") == True
 
-    return clean_text == clean_text[::-1]
+def test_palindrome_2():
+    assert is_palindrome("Kobyła ma mały bok") == True
 
-test_cases = [
-    ("kajak", True),
-    ("Kobyła ma mały bok", True),
-    ("python", False),
-    ("", True),
-    ("A", True)
-]
+def test_palindrome_3():
+    assert is_palindrome("python") == False
 
-for text, expected in test_cases:
-    result = is_palindrome(text)
-    assert result == expected, f"Błąd dla: '{text}'. Oczekiwano {expected}, otrzymano {result}"
-    print(f"Test zaliczony: '{text}' -> {result}")
+def test_palindrome_4():
+    assert is_palindrome("") == True
+
+def test_palindrome_5():
+    assert is_palindrome("A") == True

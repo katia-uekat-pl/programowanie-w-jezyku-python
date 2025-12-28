@@ -1,19 +1,14 @@
-def calculate_discount(price: float, discount: float) -> float:
-
-    if not (0.0 <= discount <= 1.0):
-        raise ValueError("Discount must be between 0 and 1 (inclusive).")
-
-    if price < 0:
-        raise ValueError("Price cannot be negative.")
-
-    final_price = price * (1 - discount)
-
-    return float(final_price)
+from logic import calculate_discount
 
 
-print(calculate_discount(100, 0.2))
-print(calculate_discount(50, 0))
-print(calculate_discount(200, 1))
+def calculate_discount_1():
+    assert(calculate_discount(100, 0.2))
+
+def test_count_vowels_2():
+    assert(calculate_discount(50, 0))
+
+def test_count_vowels_1():
+    assert(calculate_discount(200, 1))
 
 try:
     calculate_discount(100, -0.1)

@@ -1,18 +1,17 @@
-def count_vowels(text: str) -> int:
-
-    vowels = set("aeiouyąęó")
-
-    count = 0
-
-    for char in text.lower():
-        if char in vowels:
-            count += 1
-
-    return count
+from logic import count_vowels
 
 
-print(count_vowels("Python"))
-print(count_vowels("AEIOUY"))
-print(count_vowels("bcd"))
-print(count_vowels(""))
-print(count_vowels("Próba żółwia"))
+def test_count_vowels_1():
+    assert(count_vowels("Python"))
+
+def test_count_vowels_2():
+    assert (count_vowels("AEIOUY"))
+
+def test_count_vowels_3():
+    assert (count_vowels("bcd"))
+
+def test_count_vowels_4():
+    assert (count_vowels(""))
+
+def test_count_vowels_5():
+    assert (count_vowels("Próba żółwia"))

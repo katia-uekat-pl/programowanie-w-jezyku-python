@@ -1,18 +1,14 @@
-import re
-from collections import Counter
+from logic import word_frequencies
 
 
-def word_frequencies(text: str) -> dict:
+def test_word_frequencies_1():
+    assert(word_frequencies("To be or not to be"))
 
-    text_lower = text.lower()
+def test_word_frequencies_2():
+    assert(word_frequencies("Hello, hello!"))
 
-    words = re.findall(r'\w+', text_lower)
+def test_word_frequencies_3():
+    assert(word_frequencies(""))
 
-    counts = Counter(words)
-
-    return dict(counts)
-
-print(word_frequencies("To be or not to be"))
-print(word_frequencies("Hello, hello!"))
-print(word_frequencies(""))
-print(word_frequencies("Ala ma kota, a kot ma Ale."))
+def test_word_frequencies_4():
+    assert(word_frequencies("Ala ma kota, a kot ma Ale."))

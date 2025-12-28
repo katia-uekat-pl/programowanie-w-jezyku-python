@@ -1,18 +1,16 @@
-def flatten_list(nested_list: list) -> list:
+from logic import flatten_list
 
-    flat_list = []
+def test_flatten_list_1():
+    assert(flatten_list([1, 2, 3]))
 
-    for item in nested_list:
+def test_flatten_list_2():
+    assert(flatten_list([1, [2, 3], [4, [5]]]))
 
-        if isinstance(item, list):
-            flat_list.extend(flatten_list(item))
-        else:
-            flat_list.append(item)
+def test_flatten_list_3():
+    assert(flatten_list([]))
 
-    return flat_list
+def test_flatten_list_4():
+    assert(flatten_list([[[1]]]))
 
-print(flatten_list([1, 2, 3]))
-print(flatten_list([1, [2, 3], [4, [5]]]))
-print(flatten_list([]))
-print(flatten_list([[[1]]]))
-print(flatten_list([1, [2, [3, [4]]]]))
+def test_flatten_list_5():
+    assert(flatten_list([1, [2, [3, [4]]]]))
